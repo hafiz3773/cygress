@@ -19,6 +19,7 @@ class UserSearch extends User
         return [
             [['id', 'status'], 'integer'],
             [['full_name', 'nick_name', 'email', 'created_at'], 'safe'],
+            [['user_id','ic','phone'], 'safe'],
         ];
     }
 
@@ -75,7 +76,10 @@ class UserSearch extends User
         ]);
 
         $query->andFilterWhere(['like', 'full_name', $this->full_name])
+            ->andFilterWhere(['like', 'user_id', $this->user_id])
             ->andFilterWhere(['like', 'nick_name', $this->nick_name])
+            ->andFilterWhere(['like', 'ic', $this->ic])
+            ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['not', ['user_id' => 'CY0001']])      // dont show ME!
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'created_at', $this->created_at]);

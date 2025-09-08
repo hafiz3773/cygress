@@ -109,7 +109,8 @@ $this->params['breadcrumbs'][] = $this->title;
 //                                return '<a href="'.Url::to('/site/user-view?id='.$model->user_id).'">'.$model->user_id.'</a>';
                             },
                             'format' => 'raw',
-                            'filter'=>true,
+//                            'filter'=>true,
+//                            'filter' => Html::activeTextInput($searchModel, 'user_id', ['class' => 'form-control']), // force textbox filter
                             //'enableSorting'=>true
                         ],
 //                        'full_name',
@@ -132,7 +133,28 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'ic',
                         'phone',
-                        'address',
+                        [
+                            'attribute'=>'status',
+                            'format' => 'raw',
+                            'value'=> function($model) {
+                                if($model->status == 10)
+                                    $stat = '<span class="badge text-bg-success">Active</span>';
+                                else
+                                    $stat = '<span class="badge text-bg-danger">Inactive</span>';
+                                return $stat;
+                            },
+                            'filter' => \yii\helpers\Html::activeDropDownList(
+                                $searchModel,
+                                'status',
+                                [
+                                    10 => 'Active',
+                                    9  => 'Inactive',
+                                ],
+                                ['class' => 'form-control', 'prompt' => 'All'] // 'All' = placeholder
+                            ),
+                            //'enableSorting'=>true
+                        ],
+//                        'address',
 //                        [
 //                            'attribute'=>'date',
 //                            'label' => 'Attendance',
